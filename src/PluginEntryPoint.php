@@ -17,6 +17,10 @@ use SimpleXMLElement;
  *
  * The actual detection logic lives in {@see MagentoUnusedCodePlugin}, which
  * implements Psalm's `AfterClassLikeVisitInterface` hook directly.
+ *
+ * @psalm-suppress UnusedClass — loaded via composer.json's `extra.psalm.pluginClass`,
+ * not referenced anywhere in PHP. Deliberately not handled by this package's
+ * own matching logic, which targets Magento conventions, not Psalm's own.
  */
 final class PluginEntryPoint implements PluginEntryPointInterface
 {
