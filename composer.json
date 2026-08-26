@@ -10,8 +10,10 @@
         }
     ],
     "require": {
-        "php": ">=8.1",
-        "vimeo/psalm": "^5.0 || ^6.0"
+        "php": ">=8.3"
+    },
+    "require-dev": {
+        "vimeo/psalm": "^6.16"
     },
     "autoload": {
         "psr-4": {
