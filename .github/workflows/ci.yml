@@ -1,0 +1,37 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+      - run: composer install --no-interaction --prefer-dist
+      - run: composer validate --strict
+      - name: Sanity-check the plugin loads under Psalm
+        run: |
+          mkdir -p /tmp/psalm-sanity-check
+          cat > /tmp/psalm-sanity-check/psalm.xml <<'EOF'
+          <?xml version="1.0"?>
+          <psalm errorLevel="3" resolveFromConfigFile="true"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xmlns="https://getpsalm.org/schema/config"
+              xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd">
+              <projectFiles>
+                  <directory name="src" />
+              </projectFiles>
+              <plugins>
+                  <pluginClass class="Webgriffe\PsalmPluginMagento2\PluginEntryPoint" />
+              </plugins>
+          </psalm>
+          EOF
+          cd /tmp/psalm-sanity-check
+          ln -s "$GITHUB_WORKSPACE/vendor" vendor
+          ln -s "$GITHUB_WORKSPACE/src" src
+          vendor/bin/psalm --no-cache

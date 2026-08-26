@@ -1,0 +1,27 @@
+{
+    "name": "webgriffe/psalm-plugin-magento2",
+    "description": "Psalm plugin that stops UnusedClass/UnusedMethod false positives on Magento 2 framework-instantiated classes (Controllers, Blocks, Observers, Cron jobs, Plugins, Setup Patches, Console Commands)",
+    "type": "psalm-plugin",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Webgriffe Srl",
+            "homepage": "https://www.webgriffe.com"
+        }
+    ],
+    "require": {
+        "php": ">=8.1",
+        "vimeo/psalm": "^5.0 || ^6.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Webgriffe\\PsalmPluginMagento2\\": "src/"
+        }
+    },
+    "extra": {
+        "psalm": {
+            "pluginClass": "Webgriffe\\PsalmPluginMagento2\\PluginEntryPoint"
+        }
+    },
+    "minimum-stability": "stable"
+}
